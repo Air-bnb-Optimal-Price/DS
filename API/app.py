@@ -8,6 +8,6 @@ def create_app():
 
     @app.route("/")
     def index():
-        return "Test"
+        return render_template("index.html")
 
     return app
