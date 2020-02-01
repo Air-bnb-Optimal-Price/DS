@@ -9,6 +9,8 @@ verify_ssl = true
 gunicorn = "*"
 pandas = "*"
 flask = "*"
+python-decouple = "*"
+flask-sqlalchemy = "*"
 
 [requires]
 python_version = "3.7"
