@@ -1,1 +1,1 @@
-web: gunicorn aq_dashboard:APP -t 120
+web: gunicorn API:APP -t 120
