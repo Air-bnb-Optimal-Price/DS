@@ -34,7 +34,7 @@ def create_app():
                 try:
                     listing = get_listing(listing_id)
                 except Exception as e:
-                    return jsonify(str(e))
+                    return jsonify(str(e).encode('utf-8'))
                 else:
                     return {
                         "meta":
