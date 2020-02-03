@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from .models import add_update, get_listing
+import json
 
 
 def create_app():
@@ -34,7 +35,13 @@ def create_app():
                 try:
                     listing = get_listing(listing_id)
                 except Exception as e:
-                    return jsonify(str(e).encode('utf-8'))
+                    return {
+                            "meta": {
+                                "code": 201,
+                                "description": f'No listing found with ID: '
+                                               f'{listing_id}'
+                            }
+                        }
                 else:
                     return {
                         "meta":
