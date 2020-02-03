@@ -1,36 +1,34 @@
 from flask import Flask, render_template, jsonify, request
-from .users import add_user, User, init_db
+from .models import add_update, get_listing
 
 
 def create_app():
     """Creates the app variables and all the functions to run the API"""
     app = Flask(__name__)
-    init_db()
 
-    @app.route('/')
-    @app.route('/<host_id>', methods=['GET'])
+    @app.route('/<listing_id>', methods=['GET'])
     @app.route('/', methods=['POST'])
-    def index(host_id=None):
+    def index(listing_id=None):
         if request.method == 'POST':
             req_data = request.get_json()
             try:
-                list_id, host_id = req_data['list_id'], req_data['host_id']
-                add_user(list_id, host_id)
-                return "Successful"
+                listing_id, listing_name, listing_desc = req_data['listing_id'], \
+                                                         req_data['listing_name'], \
+                                                         req_data['listing_desc']
+                result = add_update(listing_id, listing_name, listing_desc)
+                return result
             except Exception as e:
-                return f'this? {e}'
+                return f'{e}'
         else:
-            host_id = host_id
-            if host_id is None:
+            listing_id = listing_id
+            if listing_id is None:
                 return "Get Request Doesn't Have A User ID"
             else:
                 try:
-                    list_id = User.query.filter(User.host_id ==
-                                                host_id).first()\
-                        .list_id
+                    listing = get_listing(listing_id)
                 except Exception as e:
-                    return f'This host doesn\'t exist. {e}'
+                    return f'{e}'
                 else:
-                    return f'First listing is {list_id}'
+                    return f'{listing}'
 
     return app

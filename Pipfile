@@ -11,6 +11,7 @@ pandas = "*"
 flask = "*"
 python-decouple = "*"
 flask-sqlalchemy = "*"
+mysql-connector = "*"
 
 [requires]
 python_version = "3.7"
