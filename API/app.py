@@ -1,6 +1,5 @@
 from flask import Flask, render_template, jsonify, request
 from .models import add_update, get_listing
-import json
 
 
 def create_app():
@@ -14,9 +13,15 @@ def create_app():
         if request.method == 'POST':
             req_data = request.get_json()
             try:
-                listing_id, listing_name, listing_desc = req_data['listing_id'], \
-                                                         req_data['listing_name'], \
-                                                         req_data['listing_desc']
+                id, summary, superhost, lat, lng, prop_type, room_type, accom, baths, \
+                bedrooms, beds, deposit, cleaning, extra_ppl, min_nights, cancel = req_data['id'], \
+                    req_data['summary'], req_data['host_is_superhost'], \
+                    req_data['latitude'], req_data['longitude'], req_data['property_type'], \
+                    req_data['room_type'], req_data['accomodates'], req_data['bathrooms'], \
+                    req_data['bedrooms'], req_data['beds'], req_data['security_deposit'], \
+                    req_data['cleaning_fee'], req_data['extra_people'], req_data['minimum_nights'], \
+                    req_data['cancellation_policy']
+
                 result = add_update(listing_id, listing_name, listing_desc)
                 return result
             except Exception as e:

@@ -1,14 +1,15 @@
 import mysql.connector
+from decouple import config
 
 db = mysql.connector.connect(
-    host="users.crtr8lbckqeg.us-east-2.rds.amazonaws.com",
-    user="admin",
-    passwd="8taUXlzixzlhQnbSPtuw",
-    database="users"
+    host=config('host'),
+    user=config('admin'),
+    passwd=config('password'),
+    database=config('database')
 )
 """
 TABLES: 
-listings - listing_id, listing_name, listing_desc
+listings - id, prediction
 """
 cur = db.cursor(buffered=True)
 
