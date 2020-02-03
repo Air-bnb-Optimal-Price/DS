@@ -43,7 +43,12 @@ def get_listing(listing_id):
     if cur.rowcount != 0:
         return cur.fetchone()
     else:
-        raise Exception("No Listing Found")
+        raise Exception ({
+            "meta": {
+                "code": 201,
+                "description": f'No listing found with ID: {listing_id}'
+            }
+        })
 
 
 class Listing:

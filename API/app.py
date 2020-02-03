@@ -6,6 +6,7 @@ def create_app():
     """Creates the app variables and all the functions to run the API"""
     app = Flask(__name__)
 
+    @app.route('/', methods=['GET'])
     @app.route('/<listing_id>', methods=['GET'])
     @app.route('/', methods=['POST'])
     def index(listing_id=None):
@@ -22,13 +23,29 @@ def create_app():
         else:
             listing_id = listing_id
             if listing_id is None:
-                return "Get Request Doesn't Have A User ID"
+                return {
+                    "meta":
+                            {
+                                "code": 202,
+                                "description": "No listing_id was passed"
+                            }
+                        }
             else:
                 try:
                     listing = get_listing(listing_id)
                 except Exception as e:
-                    return f'{e}'
+                    return jsonify(str(e))
                 else:
-                    return f'{listing}'
+                    return {
+                        "meta":
+                            {
+                                "code": 200,
+                                "description": "Listing Found"
+                            },
+                        "response": {
+                            "listing_id": listing_id,
+                            "listing_prediction": 254.24
+                        }
+                    }
 
     return app
