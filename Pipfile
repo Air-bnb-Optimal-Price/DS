@@ -6,12 +6,11 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-gunicorn = "*"
-pandas = "*"
 flask = "*"
-python-decouple = "*"
-flask-sqlalchemy = "*"
+keras = "*"
 mysql-connector = "*"
+python-decouple = "*"
+tensorflow = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.6"

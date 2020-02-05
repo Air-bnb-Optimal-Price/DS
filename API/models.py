@@ -34,9 +34,14 @@ def add_update(id, prediction):
 
 def predict(id, summary, superhost, lat, lng, prop_type, room_type, accom,
             baths, bedrooms, beds, deposit, cleaning, extra_ppl, min_nights,
-            cancel):
-    # TODO do predict stuff here
-    add_update(id, 1234)
+            cancel, model):
+    model.compile(loss='mean_squared_error',
+                  optimizer='sgd',
+                  metrics=['mae', 'accuracy'])
+    prediction = model.predict(
+        [[beds, min_nights, lat, lng, accom, baths, bedrooms, extra_ppl,
+          cleaning, deposit, superhost, prop_type, room_type, cancel]])
+    add_update(id, prediction[0][0])
     return get_listing(id)
 
 
