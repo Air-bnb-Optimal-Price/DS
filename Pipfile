@@ -11,7 +11,7 @@ flask = "*"
 keras = "*"
 mysql-connector = "*"
 python-decouple = "*"
-tensorflow = "*"
+tensorflow = "==2.0.0b1"
 
 [requires]
 python_version = "3.6"
