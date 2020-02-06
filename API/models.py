@@ -15,19 +15,19 @@ cur = db.cursor(buffered=True)
 
 
 def add_update(id, prediction):
-    stmt = f'SELECT COUNT(id) FROM listings WHERE id = {id}'
+    stmt = "SELECT COUNT(id) FROM listings WHERE id = {}".format(id)
     cur.execute(stmt)
     result = cur.fetchone()
     if result[0] == 0:
         # TODO Predict then add to DB
-        stmt = f'INSERT INTO listings (id, prediction)' \
-               f'VALUES ("{id}", "{prediction}")'
+        stmt = "INSERT INTO listings (id, prediction)" \
+               "VALUES ('{}', {})".format(id,str(prediction))
         cur.execute(stmt)
         db.commit()
     else:
         # TODO Override previous prediction
         stmt = "UPDATE listings SET prediction = %s WHERE id = %s"
-        val = (prediction, id)
+        val = (str(prediction), id)
         cur.execute(stmt, val)
         db.commit()
 
@@ -35,18 +35,18 @@ def add_update(id, prediction):
 def predict(id, summary, superhost, lat, lng, prop_type, room_type, accom,
             baths, bedrooms, beds, deposit, cleaning, extra_ppl, min_nights,
             cancel, model):
-    model.compile(loss='mean_squared_error',
-                  optimizer='sgd',
-                  metrics=['mae', 'accuracy'])
+    # model.compile(loss='mean_squared_error',
+    #               optimizer='sgd',
+    #               metrics=['mae', 'accuracy'])
     prediction = model.predict(
-        [[beds, min_nights, lat, lng, accom, baths, bedrooms, extra_ppl,
-          cleaning, deposit, superhost, prop_type, room_type, cancel]])
+        [[[beds, min_nights, lat, lng, accom, baths, bedrooms, extra_ppl,
+          cleaning, deposit, superhost, prop_type, room_type, cancel]]])
     add_update(id, prediction[0][0])
     return get_listing(id)
 
 
 def get_listing(id):
-    stmt = f'SELECT * FROM listings WHERE id = "{id}"'
+    stmt = "SELECT * FROM listings WHERE id = '{}'".format(id)
     cur.execute(stmt)
     if cur.rowcount != 0:
         return cur.fetchone()
