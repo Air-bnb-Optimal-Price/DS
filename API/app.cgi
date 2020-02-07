@@ -3,12 +3,14 @@ import os
 import sys
 
 sys.path.insert(0,
-                '/home/abt2viqv4cry/public_html/python/cgi-bin/venv/lib/python3.5'
+                '/home/abt2viqv4cry/public_html/python/cgi-bin/venv/lib'
+                '/python3.5'
                 '/site-packages')
 
 from wsgiref.handlers import CGIHandler
 
 from app import app
+
 
 class ProxyFix(object):
     def __init__(self, app):
@@ -17,9 +19,6 @@ class ProxyFix(object):
     def __call__(self, environ, start_response):
         environ['SERVER_NAME'] = ""
         environ['SERVER_PORT'] = "80"
-        environ['REQUEST_METHOD'] = "GET"
-        environ['SCRIPT_NAME'] = ""
-        environ['QUERY_STRING'] = ""
         environ['SERVER_PROTOCOL'] = "HTTP/1.1"
         return self.app(environ, start_response)
 
