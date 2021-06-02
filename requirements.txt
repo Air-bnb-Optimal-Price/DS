@@ -37,6 +37,6 @@ tb-nightly==1.14.0a20190603
 https://files.pythonhosted.org/packages/46/0f/7bd55361168bb32796b360ad15a25de6966c9c1beb58a8e30c01c8279862/tensorflow-2.0.0-cp36-cp36m-manylinux2010_x86_64.whl
 termcolor==1.1.0
 tf-estimator-nightly==1.14.0.dev2019060501
-urllib3==1.25.8
+urllib3==1.26.5
 Werkzeug==0.16.1
 wrapt==1.11.2
